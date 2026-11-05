@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "threshold": 0.34,
+  "description_concepts": [
+    "input",
+    "output",
+    "task"
+  ],
+  "missing_description_concepts": [],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "false_positive": 0,
+    "false_negative": 0,
+    "pass_rate": 1.0
+  },
+  "failures": [],
+  "results": {
+    "should_trigger": [
+      {
+        "prompt": "请使用 character-asset-cleanup，以这张已确认人物图为原图，并行制作色块、线稿、白膜三路，全部验收后再合图，保留身份和构图。",
+        "family": "default",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.667,
+        "matched_concepts": [
+          "input",
+          "output"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "人物洗图：三图并行，色块线稿白膜",
+        "family": "default",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 1.0,
+        "matched_concepts": [
+          "input",
+          "output",
+          "task"
+        ],
+        "negative_pattern": null
+      }
+    ],
+    "should_not_trigger": [
+      {
+        "prompt": "写一首诗",
+        "family": "default",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "写一首诗"
+      },
+      {
+        "prompt": "给视频加字幕",
+        "family": "default",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "给视频加字幕"
+      }
+    ],
+    "near_neighbor": [
+      {
+        "prompt": "只做普通抠图",
+        "family": "default",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "只做普通抠图"
+      }
+    ]
+  }
+}

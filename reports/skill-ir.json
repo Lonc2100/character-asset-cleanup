@@ -1,0 +1,121 @@
+{
+  "schema_version": "2.0.0-qiaomu-lite",
+  "generated_at": "2026-11-05",
+  "package": {
+    "name": "character-asset-cleanup",
+    "version": "0.1.0",
+    "owner": "Lonc2100",
+    "maturity_tier": "scaffold",
+    "lifecycle_stage": "scaffold",
+    "upstream_inspiration": null,
+    "upstream_sync": {}
+  },
+  "intent": {
+    "description": "将已批准的人物角色图拆成综合色块图、结构线稿图和3D白膜图三路并行生成，再以原图为身份与构图权威进行最终合成，得到更干净、稳定的真人角色资产。用于用户提到“洗图”“人物图去脏”“角色资产清洗”“色块加线稿加白膜”“三图并行后合图”时。不要用于普通抠图、单步修图、单纯换背景、剧情关键帧或视频生成。",
+    "job_to_be_done": "Clean an approved character asset through separated color-value, contour and volume guides without changing the character.",
+    "target_users": [
+      "AI video creators using local agent skills"
+    ],
+    "inputs": [
+      "approved character asset",
+      "locked identity and layout invariants",
+      "target background and material"
+    ],
+    "outputs": [
+      "color-value guide",
+      "line-art guide",
+      "white maquette guide",
+      "clean composite candidate",
+      "experiment record"
+    ],
+    "exclusions": [
+      "character casting",
+      "ordinary retouching",
+      "background removal only",
+      "story keyframe generation",
+      "video generation",
+      "automatic asset promotion"
+    ],
+    "qiaomu_defaults": {}
+  },
+  "triggers": {
+    "should_trigger": [
+      "请使用 character-asset-cleanup，以这张已确认人物图为原图，并行制作色块、线稿、白膜三路，全部验收后再合图，保留身份和构图。",
+      "人物洗图：三图并行，色块线稿白膜"
+    ],
+    "should_not_trigger": [
+      "写一首诗",
+      "给视频加字幕"
+    ],
+    "near_neighbor": [
+      "只做普通抠图"
+    ]
+  },
+  "workflow": {
+    "router_rules": [],
+    "compact_workflow": [],
+    "gate_ladder": [],
+    "output_contract": []
+  },
+  "resources": {
+    "references": [
+      "references\\acceptance-gates.md",
+      "references\\prompt-contracts.md"
+    ],
+    "scripts": [],
+    "evals": [
+      "evals\\trigger_cases.json"
+    ],
+    "reports": [
+      "reports\\skill-ir.json",
+      "reports\\trigger-eval.json"
+    ]
+  },
+  "portability": {
+    "canonical_format": "agent-skills",
+    "adapter_targets": [
+      "openai",
+      "claude",
+      "generic",
+      "agent-skills-compatible"
+    ],
+    "activation": {
+      "mode": "manual-or-description",
+      "paths": []
+    },
+    "execution": {
+      "context": "inline",
+      "shell": "none"
+    },
+    "trust": {
+      "source_tier": "local",
+      "source_asset_policy": "only use an explicitly approved character asset"
+    },
+    "permissions": {
+      "network": "only through the active image-generation provider when requested",
+      "file_read": "approved source image and scoped asset records",
+      "file_write": "new non-overwriting cleanup experiment directory only",
+      "external_actions": "forbidden"
+    },
+    "degradation": {
+      "openai": "use available image generation with explicit reference roles; do not claim unsupported ControlNet weights",
+      "claude": "requires an available image-generation tool or produces prompts and gates only",
+      "generic": "requires concurrent image-generation capability; otherwise report serial limitation before execution",
+      "agent-skills-compatible": "canonical workflow with provider-specific image adapter"
+    }
+  },
+  "gates": {
+    "scaffold": [
+      "approved source asset resolved",
+      "three guide images started concurrently when the tool supports it",
+      "all three guide gates pass before final composition",
+      "final output remains a non-overwriting candidate until user approval"
+    ]
+  },
+  "evidence_boundary": {
+    "generated_reports_are_evidence": true,
+    "planned_work_is_evidence": false,
+    "missing_external_or_human_evidence_label": "missing evidence",
+    "public_claim_policy": "claim only what local validation, install proof, human review, or provider-backed evidence actually supports"
+  }
+}

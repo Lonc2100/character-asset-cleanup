@@ -1,0 +1,40 @@
+interface:
+  display_name: "角色资产三路并行洗图"
+  short_description: "并行生成综合色块、线稿和3D白膜，再合成干净真人角色资产"
+  default_prompt: "Use $character-asset-cleanup on an already approved character asset. Lock the source image as the authority for identity, age, facial proportions, natural asymmetry, hairstyle, outfit, pose, framing, layout and period details. Generate a semantic color-value block guide, a structural line-art guide and a matte white 3D maquette guide concurrently. Validate all three independently, retry only a failed branch once, and start the final composite only after all three pass. Keep the final result photorealistic unless the user explicitly requests another material, enforce a perfectly solid background, save it as a non-overwriting candidate, and never promote it to current without user approval."
+  examples:
+    - "把这张角色图洗干净，三张引导图并行生成后再合图"
+    - "生综合色块、线稿和白膜，重组一个真人角色候选图"
+    - "角色资产背景和衣服有脏块，用三路洗图流程处理"
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+    - "agent-skills-compatible"
+  activation:
+    mode: "manual-or-description"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "none"
+  trust:
+    source_tier: "local"
+    source_asset_policy: "only use an explicitly approved character asset"
+  permissions:
+    network: "only through the active image-generation provider when requested"
+    file_read: "approved source image and scoped asset records"
+    file_write: "new non-overwriting cleanup experiment directory only"
+    external_actions: "forbidden"
+  degradation:
+    openai: "use available image generation with explicit reference roles; do not claim unsupported ControlNet weights"
+    claude: "requires an available image-generation tool or produces prompts and gates only"
+    generic: "requires concurrent image-generation capability; otherwise report serial limitation before execution"
+    agent-skills-compatible: "canonical workflow with provider-specific image adapter"
+gates:
+  scaffold:
+    - "approved source asset resolved"
+    - "three guide images started concurrently when the tool supports it"
+    - "all three guide gates pass before final composition"
+    - "final output remains a non-overwriting candidate until user approval"

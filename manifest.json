@@ -1,0 +1,65 @@
+{
+  "name": "character-asset-cleanup",
+  "version": "0.1.0",
+  "owner": "Lonc2100",
+  "updated_at": "2026-11-05",
+  "status": "active",
+  "maturity": "scaffold",
+  "maturity_tier": "scaffold",
+  "lifecycle_stage": "scaffold",
+  "context_budget_tier": "scaffold",
+  "factory_components": [
+    "references",
+    "evals"
+  ],
+  "publication_status": "public-preview",
+  "targets": [
+    "openai-codex-local"
+  ],
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible"
+  ],
+  "external_services": [
+    "active image-generation provider"
+  ],
+  "credential_policy": "Do not store image-provider credentials, tokens, cookies or account data in the package or experiment record.",
+  "review_cadence": "after the first two same-source A/B tests or any identity-drift failure",
+  "output_contract": "Three concurrently generated guide images, followed only after all pass by one non-overwriting clean composite candidate and an experiment record.",
+  "rollback_boundary": "Keep the approved source and all previous asset versions unchanged; reject the candidate or remove it from current selection without altering prior files.",
+  "intent": {
+    "job_to_be_done": "Clean an approved character asset through separated color-value, contour and volume guides without changing the character.",
+    "target_users": [
+      "AI video creators using local agent skills"
+    ],
+    "inputs": [
+      "approved character asset",
+      "locked identity and layout invariants",
+      "target background and material"
+    ],
+    "outputs": [
+      "color-value guide",
+      "line-art guide",
+      "white maquette guide",
+      "clean composite candidate",
+      "experiment record"
+    ],
+    "exclusions": [
+      "character casting",
+      "ordinary retouching",
+      "background removal only",
+      "story keyframe generation",
+      "video generation",
+      "automatic asset promotion"
+    ]
+  },
+  "release_gates": [
+    "package validation",
+    "secret scan",
+    "feature PR merge",
+    "versioned release",
+    "clean install"
+  ]
+}
