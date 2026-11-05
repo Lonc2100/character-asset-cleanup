@@ -1,0 +1,50 @@
+{
+  "positive_concepts": {
+    "task": [
+      "洗图",
+      "角色资产清洗",
+      "三图并行"
+    ],
+    "input": [
+      "人物",
+      "角色"
+    ],
+    "output": [
+      "色块",
+      "线稿",
+      "白膜"
+    ]
+  },
+  "description_required_concepts": [
+    "task",
+    "input",
+    "output"
+  ],
+  "recommended_threshold": 0.34,
+  "negative_patterns": [
+    "只做普通抠图",
+    "写一首诗",
+    "给视频加字幕"
+  ],
+  "should_trigger": [
+    {
+      "text": "请使用 character-asset-cleanup，以这张已确认人物图为原图，并行制作色块、线稿、白膜三路，全部验收后再合图，保留身份和构图。"
+    },
+    {
+      "text": "人物洗图：三图并行，色块线稿白膜"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "写一首诗"
+    },
+    {
+      "text": "给视频加字幕"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "只做普通抠图"
+    }
+  ]
+}
